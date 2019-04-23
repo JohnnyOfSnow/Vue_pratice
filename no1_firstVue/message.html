@@ -2,12 +2,20 @@
 <head></head>
 <body>
 
-<script type="text/javascript" src="./message.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
 
 </script>
 </body>
 	<div id="Msg">
 		{{ content }}
 	</div>
-	
+
+	<script>
+		let firstVueObj = new Vue({
+			el: '#Msg',
+			data:{
+				content: 'Hello vue!',
+			},
+		})
+	</script>
 </html>
