@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TextBox Change Pratice</title>
+
+	<!-- v-if, v-else-if, v-else need 2.1.0+ version -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.0/vue.min.js"></script>
+</head>
+<body>
+	<div id="vueDiv">
+		<span v-if= "status == 'A'">A</span>
+		<span v-else-if= "status == 'B'">B</span>
+		<span v-else>C</span>
+	</div>
+
+	<script>
+		let vueData = {
+			status: 'A',
+		}
+
+		let vueDiv = new Vue({
+			el: '#vueDiv',
+			data: vueData,
+		})
+	</script>
+</body>
+</html>
