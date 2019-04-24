@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Event driven: Get current time</title>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
+</head>
+<body>
+	<!-- v-on: can be abbreviated @-->
+	<!-- v-on: = @ -->
+	<div id="timeDisplay" @click="getTime">
+		{{ content }}
+	</div>
+
+	<script>
+		let timeData = {
+			content: 'Click me to see current time',	
+		}
+
+		let timeMethod = {
+			getTime: ()=>{
+				console.log(String(new Date()))
+			},
+		} 
+
+		let timeDisplay = new Vue({
+			el: '#timeDisplay',
+			data: timeData,
+			methods: timeMethod,
+		})
+	</script>
+</body>
+</html>

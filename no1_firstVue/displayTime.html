@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Display current time</title>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.18/vue.min.js"></script>
+
+	
+</head>
+<body>
+	<div id="timeDisplay" v-bind:title="nowTime">
+		{{ content }}
+	</div>
+
+	<script>
+		let timeData = {
+			content: 'Current Time',
+			nowTime: String(new Date()),
+		}
+
+		let timeDisplay = new Vue({
+			el: '#timeDisplay',
+			data: timeData,
+		})
+	</script>
+</body>
+</html>
