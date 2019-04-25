@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.0/vue.min.js"></script>
+	<meta charset="utf-8">
+</head>
+<body>
+	<!-- Although :key value can avoid replanting window that cause user data remain on the same location, user's data will be cleared. -->
+	<div id="formList">
+		<div v-for="list in lists">
+			{{titleText}}{{list.item}}
+			<input :placeholder="list.item" :key="list.id">
+		</div>
+		<input type="button" value="反轉陣列" v-on:click="changeSort">
+	</div>
+
+	<script>
+		/**
+		 * Test: Use browser's console, enter the following statement to test it can dynamic add or delete form's column.
+		 *
+		 * Add column: listData.lists.push({id: 'age', item: '年齡'})
+		 * Delete column: listData.lists.splice(3,1)
+		 */
+		let listData = {
+			titleText: '請輸入',
+			lists:[
+				{id: 'name', item: '姓名'},
+				{id: 'mail', item: '信箱'},
+				{id: 'phone', item: '電話'}
+			]
+		}
+
+		let changeMethod = {
+			changeSort: () => {
+				//reverse array
+				listData.lists.reverse()
+			}
+		}
+
+		let formList = new Vue({
+			el: '#formList',
+			data: listData,
+			methods: changeMethod,
+		})
+	</script>
+</body>
+</html>
