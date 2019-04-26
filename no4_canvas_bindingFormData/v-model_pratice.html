@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>v-model Pratice</title>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.0/vue.min.js"></script>
+	<meta charset="utf-8">
+</head>
+<body>
+	<label>1.測試文字方塊輸入字串，會不會隨之改變</label>
+	<div id="textbox">
+		<!-- The following explanation of v-model is refer to: https://blog.csdn.net/chiuwingyan/article/details/78163039 -->
+		<!-- v-model will give a dynamic binding value by listening the input event from user. -->
+		<input v-model="text" v-model:value="text">
+		<div>您在上面輸入的文字是:{{text}}</div>
+	</div>
+
+	<br>
+	<br>
+
+	<label>2.測試文字區域內輸入字串，會不會隨之改變(注意會不會分段)</label>
+	<div id="introduce">
+		<!-- v-model:value = :value -->
+		<textarea v-model="text" :value="text" style = "height:200px; width:300px;"></textarea>
+		<div>您的自我介紹內容</div>
+		<!-- Tag <pre> can remain \n that user input in textArea.-->
+		<pre>{{text}}</pre>
+	</div>
+
+	<br>
+	<br>
+
+	<label>3.測試下拉式選單，會不會隨之改變</label>
+	<div id="gender">
+		<select id="s_gender" :value="selectVal" v-on:change="updataVal">
+			<option v-for="list of lists" :value="list.val">{{list.item}}</option>
+		</select>
+		<div>選擇的性別是:{{selectName}}</div>
+		<div>選擇的性別英文是:{{selectVal}}</div>
+	</div>
+
+	<br>
+	<br>
+
+	<label>4.點擊勾選方塊，確認會不會隨之改變</label>
+	<div id="habit">
+		<div>
+			<span v-for="list in lists">
+				<input type="checkbox" :value="list.item" v-model="checkedHabit">
+				<label>{{list.item}}</label>
+			</span>
+		</div>
+		<div>選擇的興趣是:{{checkedHabit}}</div>
+	</div>
+
+	<script>
+		let textData = {
+			text: '',
+		}
+
+		let textbox = new Vue ({
+			el: '#textbox',
+			data: textData,
+		})
+
+		let introduceData = {
+			text: '',
+		}
+
+		let introduce = new Vue ({
+			el: '#introduce',
+			data: introduceData,
+		})
+
+		let genderData = {
+			selectName: '',
+			selectVal: '',
+			lists: [
+				{val: "M", item: '男'},
+				{val: "W", item: '女'}
+			]
+		}
+
+		let genderMethod = {
+			updataVal: () => {
+				let obj = document.getElementById('s_gender');
+
+				genderData.selectVal = obj.value;
+				genderData.selectName = obj.options[obj.selectedIndex].text;
+			}
+		}
+
+		let gender = new Vue ({
+			el: '#gender',
+			data: genderData,
+			methods: genderMethod,
+		})
+
+		let habitData = {
+			checkedHabit: [],
+			lists: [
+				{val: "See animation", item: "看動畫"},
+				{val: "Create animation", item: "做動畫"}
+			]
+		}
+
+		let habit = new Vue ({
+			el: '#habit',
+			data: habitData,
+		})
+	</script>
+</body>
+</html>
