@@ -52,6 +52,21 @@
 		<div>選擇的興趣是:{{checkedHabit}}</div>
 	</div>
 
+	<br>
+	<br>
+
+	<label>5.點擊圓點按鈕，確認會不會隨之改變</label>
+	<div id="food">
+		<div>
+			<span v-for="list in lists">
+				<input type="radio" :value="list.item" v-model="checkedFood">
+				<label>{{list.item}}</label>
+			</span>
+		</div>
+		<div>要點的菜餚是:{{checkedFood}}</div>	
+	</div>
+
+
 	<script>
 		let textData = {
 			text: '',
@@ -106,6 +121,23 @@
 		let habit = new Vue ({
 			el: '#habit',
 			data: habitData,
+		})
+
+		let foodData = {
+			checkedFood: '',
+			lists: [
+				{val: "fish", item: "魚"},
+				{val: "chicken", item: "雞"},
+				{val: "vegetable", item: "蔬菜"},
+				{val: "fruit", item: "水果"},
+				{val: "noodles", item: "麵"},
+				{val: "bread", item: "麵包"}
+			]
+		}
+
+		let food = new Vue ({
+			el: '#food',
+			data: foodData
 		})
 	</script>
 </body>
