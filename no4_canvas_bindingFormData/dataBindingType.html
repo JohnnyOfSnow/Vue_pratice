@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Showing different data binding type</title>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.0/vue.min.js"></script>
+	<meta charset="utf-8">
+</head>
+<body>
+	<label><h2>v-model.lazy example</h2></label>
+	<label>1.注意文字方塊在被點擊時，下方文字會不會隨之改變<br>另外，注意文字方塊沒被點擊時，下方文字是否會改變</label>
+
+	<div id="lazy_text">
+		<br>
+		<!-- v-model:value will cause .lazy not working-->
+		<input v-model.lazy="text" :value="text">
+		<div>您在上面輸入的文字是:{{text}}</div>
+	</div>
+
+	<br>
+	<br>
+
+	<label><h2>v-model.number example</h2></label>
+	<label>2.先觀察文字方塊與下方文字的狀態，之後試著在文字方塊內輸入各種資料型態的資料，看下方的文字是否隨之更動</label>
+	<div id="age">
+		<br>
+		<input v-model.number="ageText" :value="ageText" type="number">
+		<div>您的年齡是:{{ageText}}</div>
+	</div>
+
+	<br>
+	<br>
+
+	<label><h2>v-model.trim example</h2></label>
+	<label>3.試著在下方的文字方格內，在輸入的文字前後多按幾次空白鍵，看看下方的文字是否跟著加入空白</label>
+	<div id="trim_text">
+		<br>
+		<input v-model.trim="text" :value="text">
+		<div>您在上面輸入的文字是:{{text}}</div>
+	</div>
+
+	<script>
+		let textData = {
+			text: '草莓',
+		}
+
+		let lazy_text = new Vue ({
+			el: '#lazy_text',
+			data: textData,
+		})
+
+		let ageData = {
+			ageText: '文字',
+		}
+
+		let age = new Vue ({
+			el: '#age',
+			data: ageData,
+		})
+
+		let textData_trim = {
+			text: "西瓜",
+		}
+
+		let trim_text = new Vue ({
+			el: '#trim_text',
+			data: textData_trim,
+		})
+	</script>
+</body>
+</html>
