@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.0/vue.min.js"></script>
+	<meta charset="utf-8">
+</head>
+<body>
+	<label><h2>Original data binding.</h2></label>
+	<div id="baseVue">
+		{{text.split('').reverse().join('')}}
+	</div>
+
+	<br>
+	<br>
+
+	<label><h2>Handle data by using computed property</h2></label>
+	<div id="computedVue">
+		{{reText}}
+	</div>
+
+	<div id="nameVue">
+		{{name}}
+	</div>
+
+	<script>
+		let textData = {
+			text: '好熱的天氣',
+		}
+
+		let baseVue = new Vue ({
+			el: '#baseVue',
+			data: textData,
+		})
+
+		let computedVue = new Vue ({
+			el: '#computedVue',
+			data: textData,
+			computed: {
+				/**
+				 * this: computedVue(this instance)
+				 * It's able to get data from computedVue.
+				 */
+				reText:function(){
+					return this.text.split('').reverse().join('')
+				}
+			}
+		})
+
+		let nameData = {
+			firstName: 'Cruise',
+			lastName: 'Tina',
+		}
+
+		let nameComputed = {
+			name: {
+				// => : the current defined object(JavaScript SE6)
+				get:() => nameData.firstName + ' ' + nameData.lastName,
+
+				set:(val) => {
+					let name = val.split('')
+					nameData.firstName = name[0]
+					nameData.lastName = name[1]
+				}
+			}
+		}
+
+		let nameVue = new Vue ({
+			el: '#nameVue',
+			data: nameData,
+			computed: nameComputed,
+		})
+
+	</script>
+
+</body>
+</html>
