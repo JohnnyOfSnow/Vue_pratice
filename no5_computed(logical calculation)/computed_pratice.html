@@ -54,13 +54,16 @@
 
 		let nameComputed = {
 			name: {
-				// => : the current defined object(JavaScript SE6)
+				/** => : the current defined object(JavaScript ES6)
+				 *  So, the following get and set function can't use this as the current using object.
+				 */
 				get:() => nameData.firstName + ' ' + nameData.lastName,
+				
 
-				set:(val) => {
-					let name = val.split('')
+				set:(val) => {//Setter test: by entering nameVue.name('Steve Job') in console to check name whether change or not.
+					let name = val.split(' ')
 					nameData.firstName = name[0]
-					nameData.lastName = name[1]
+					nameData.lastName = name[name.length-1]
 				}
 			}
 		}
