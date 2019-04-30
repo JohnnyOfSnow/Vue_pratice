@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Vue computed property</title>
 	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.0/vue.min.js"></script>
 	<meta charset="utf-8">
 </head>
@@ -19,6 +19,10 @@
 		{{reText}}
 	</div>
 
+	<br>
+	<br>
+	
+	<label><h2>Try to enter <label style="color: blue">nameVue.name = 'Steve Job'</label>, and change this name Cruise Tina. </h2></label>
 	<div id="nameVue">
 		{{name}}
 	</div>
@@ -60,7 +64,7 @@
 				get:() => nameData.firstName + ' ' + nameData.lastName,
 				
 
-				set:(val) => {//Setter test: by entering nameVue.name('Steve Job') in console to check name whether change or not.
+				set:(val) => {//Setter test: by entering nameVue.name = 'Steve Job' in console to check name whether change or not.
 					let name = val.split(' ')
 					nameData.firstName = name[0]
 					nameData.lastName = name[name.length-1]
