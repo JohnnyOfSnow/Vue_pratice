@@ -6,8 +6,23 @@
 	<meta charset="utf-8">
 </head>
 <body>
+	<label><h2>The following example show Vue's watch property that judge data when user change it.</h2></label>
+	<label><h3>1.Test program by entering the correct form(e.g., Steve Jobs, Chirs Tina). </h3></label>
+	<label><h3>2.Test program by entering the wrong form(e.g., Steve, Chirs) or balnk the textbox. </h3></label>
+ 	<br>
+	<label><h2>Original data binding.</h2></label>
+
 	<div id="nameVue">
 		<input id="name" v-model="name" @change="checkName">
+		<span style="color: red">{{alertMessage}}</span>
+	</div>
+
+ 	<br>
+ 	<br>
+
+ 	<label><h2>Handle data by using 'watch' property</h2></label>
+	<div id="nameVueByWatch">
+		<input id="nameByWatch" v-model="nameByWatch">
 		<span style="color: red">{{alertMessage}}</span>
 	</div>
 
@@ -32,6 +47,32 @@
 			el: '#nameVue',
 			data: nameData,
 			methods: nameMethod,
+		})
+
+		let nameDataByWatch = {
+			nameByWatch: 'Chirs Tina',
+			alertMessage: ' ',
+		}
+
+		let nameMethodByWatch = {
+			checkName: (newName, oldName) => {
+				if(newName.trim().indexOf(' ') == -1){
+					nameDataByWatch.alertMessage = '請輸入正確的姓名格式'
+				}else{
+					nameDataByWatch.alertMessage = ''
+				}
+			}
+		}
+
+
+		let nameVueByWatch = new Vue ({
+			el: '#nameVueByWatch',
+			data: nameDataByWatch,
+			watch: {
+				nameByWatch: (newVal, oldVal) => {
+					nameMethodByWatch.checkName(newVal)
+				}
+			}
 		})
 	</script>
 
