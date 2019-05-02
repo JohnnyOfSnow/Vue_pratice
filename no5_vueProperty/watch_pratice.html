@@ -64,12 +64,28 @@
 			}
 		}
 
+		/**
+		 * v-model do the following two things.
+         * 1. Use v-bind to complete One-way binding data when data is changed.
+         * 2. Use v-on:input to detect value change, and update value that is binded by v-bind.
+         *
+         */
+
+         /**
+          * Based on v-model do v-on:input, let 'watch' property be triggered by setter, and execute the event defined in 'watch'.
+          *
+          * Finally, rebind the value by getter.
+          */
 
 		let nameVueByWatch = new Vue ({
 			el: '#nameVueByWatch',
 			data: nameDataByWatch,
 			watch: {
+				/**
+				 * Trigger the following code when name is changed.
+				 */
 				nameByWatch: (newVal, oldVal) => {
+					//Call function checkName which is defined in nameMethodByWatch.
 					nameMethodByWatch.checkName(newVal)
 				}
 			}
