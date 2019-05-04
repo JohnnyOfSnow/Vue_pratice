@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Control class by Vue</title>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.0/vue.min.js"></script>
+	<meta charset="utf-8">
+	<style>
+		.redAlert{
+			color: red;
+		}
+
+		.textBold{
+			font-weight: bold;
+		}
+	</style>
+	
+</head>
+<body>
+	<label><h2>The following example show Vue's computed property can control class defined as CSS style.</h2></label>
+
+ 	<br>
+
+	<label><h2>1.data binding(by v-bind) in one class(CSS).</h2></label>
+	<div id="messageVue">
+		<span :class="messageClass">{{message}}</span>
+	</div>
+
+	<br>
+
+	<label><h2>2.data binding(by v-bind) in many classes(CSS).</h2></label>
+	<!-- messageVueBMC = messageVueBindingManyClasses -->
+	<div id="messageVueBMC">
+		<span :class="messageClass">{{message}}</span>
+	</div>
+
+	<br>
+
+	<label><h2>3.data binding(by computed) in one class(CSS).</h2></label>
+	<!-- messageVueUC = messageVueUseComputed -->
+	<div id="messageVueUC">
+		<span class="textBold" :class="[textAlert]">{{message}}</span>
+	</div>
+
+	<br>
+
+	<label><h2>4.data binding(by computed) in many classes(CSS).</h2></label>
+	<!-- computedIMC = computedInManyClass -->
+	<div id="computedIMC">
+		<span :class="textAlert">{{message}}</span>
+	</div>
+
+	<script>
+		let messageData = {
+			message: '這就是警告文字',
+			messageClass: 'redAlert',
+		}
+
+		let messageVue = new Vue ({
+			el: '#messageVue',
+			data: messageData,
+		})
+
+		//  messageDataBMC = messageDataByManyClasses
+		let messageDataBMC = {
+			message: '這就是警告文字',
+			messageClass: ['redAlert', 'textBold'],
+		}
+
+		let messageVueBMC = new Vue ({
+			el: '#messageVueBMC',
+			data: messageDataBMC,
+		})
+
+		//  messageDataUC = messageDataUseComputed
+		let messageDataUC = {
+			message: '這就是警告文字',
+			textRed: 'redAlert',
+		}
+
+		let messageComputed = {
+			textAlert : () => {
+				return false ? messageDataUC.textRed : ''
+			}
+		}
+
+		let messageVueUC = new Vue ({
+			el: '#messageVueUC',
+			data: messageDataUC,
+			computed: messageComputed,
+		})
+
+		//  messageDataUCIMC = messageDataUseComputed(in many classes)
+		let messageDataUCIMC = {
+			message: '這就是警告文字',
+		}
+
+		// messageComputedIMC = messageComputed(in many classes)
+		let messageComputedIMC = {
+			textAlert: () => {
+				let classObj = {}
+
+				classObj.redAlert = true
+				classObj.textBold = true
+
+				return classObj
+			}
+		}
+
+		let computedIMC = new Vue ({
+			el: '#computedIMC',
+			data: messageDataUCIMC,
+			computed: messageComputedIMC,
+		})
+
+
+	</script>
+</body>
+</html>
