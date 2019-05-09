@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.0/vue.min.js"></script>
+	<meta charset="utf-8">
+	<style>
+		.testArea{
+			color: white;
+		}
+		#outside {
+			height: 100px;
+			width: 200px;
+			background-color: blue;
+		}
+	</style>
+</head>
+<body style="background-color: black">
+	<div class="testArea">
+	
+		<div id="timeVue">
+			<input type="button" value="點我看時間" @click="getTime">
+		</div>
+
+		<div id="evnetVue">
+			<input type="button" value="點我看事件" @click="getValue($event)">
+		</div>
+
+
+		<br>
+
+		<!-- DOM tree: 當網頁載入至瀏覽器時，瀏覽器分析這個HTML文件後，依照內容解析成DOM(document object model),形成的由上而下的樹狀結構稱作DOM tree-->
+		<!-- 下面的範例展示即便各自定義不同的事件函數，但因為是同一個DOM的關係，而都會被觸發事件-->
+		<label><h3>3.Condition: Event is bubbling up the DOM tree.</h3></label>
+		<ul>
+			<li>Test: try to click the following button, red and blue area, and notice the browse's console.</li>
+		</ul>
+		<div id="ex1Vue">
+			<div id="outside" :class="outside" @click="clickOutside">
+				<div id="inside" :style="insideCSS" @click="clickInside">
+					<input id="clickMe" type="button" value="按我" @click="clickMe">
+				</div>
+			</div>
+		</div>
+
+		<!-- Use .stop modifire in @click to prevent the upper condition occur.-->
+		<label><h3>4.Modifire .stop: handle the upper condition</h3></label>
+		<ul>
+			<li>Test: try to click the following button, red and blue area, and notice the browse's console.</li>
+		</ul>
+		<div id="ex1_Vue">
+			<div id="outside" :class="outside" @click="clickOutside">
+				<div id="inside" :style="insideCSS" @click.stop="clickInside">
+					<input id="clickMe" type="button" value="按我" @click.stop="clickMe">
+				</div>
+			</div>
+		</div>
+
+		<!-- Use .prevent modifire in @click to prevent the upper condition occur.-->
+		<label><h3>5.Modifire .prevent: let DOM lose original function, and execute our defined function.</h3></label>
+		<ul>
+			<li><h4>Though the following link use "a href" tag, it won't chagne web address when you click.</h4></li>
+			<li>Test: open your browser's console, and click the following link to check.</li>
+		</ul>
+		
+		<div id="ex2Vue">
+			<a v-bind:href="URLText" @click.prevent="clickMe">{{message}}</a>
+		</div>
+
+	</div>
+	<script>
+		let timeMethod = {
+			getTime: () => {
+				console.log(String(new Date()))
+			}
+		}
+
+		let eventMethod = {
+			getValue : (event) => {
+				console.log(event)
+			}
+		}
+
+		let timeVue = new Vue ({
+			el: '#timeVue',
+			methods: timeMethod,
+		})
+
+		let evnetVue = new Vue ({
+			el: '#evnetVue',
+			methods: eventMethod,
+		})
+
+		let ex1Data = {
+			outside: 'outside',
+			insideCSS: {
+				height: '50px',
+				width: '150px',
+				backgroundColor: 'red',
+			}
+		}
+
+		let ex1Method = {
+			clickOutside: () => {
+				console.log("外面:藍色區域")
+			},
+
+			clickInside: () => {
+				console.log("裡面:紅色區域")
+			},
+
+			clickMe: () => {
+				console.log("按鈕")
+			}
+		}
+
+		let ex1Vue = new Vue ({
+			el: '#ex1Vue',
+			data: ex1Data,
+			methods: ex1Method,
+		})
+		
+		let ex1_Vue = new Vue ({
+			el: '#ex1_Vue',
+			data: ex1Data,
+			methods: ex1Method,
+		})
+
+		let ex2Data = {
+			message: '跳到osu!網站',
+			URLText: 'https://osu.ppy.sh/home',
+		}
+
+		let ex2Method = {
+			clickMe: () => {
+				console.log("觸發按鈕事件,但是不會跳轉頁面")
+			}
+		}
+
+		let ex2Vue = new Vue ({
+			el: '#ex2Vue',
+			data: ex2Data,
+			methods: ex2Method,
+		})
+
+	</script>
+</body>
+</html>
