@@ -67,6 +67,17 @@
 			<a v-bind:href="URLText" @click.prevent="clickMe">{{message}}</a>
 		</div>
 
+		<label><h3>6.Button Modifire: </h3></label>
+		<div id="ex3Vue">
+			<h4>在下方的文字框內輸入文字後按Enter會在console顯示內容</h4>
+			<!-- 設定鍵盤英文A代替Enter鍵，在@keyup.enter之後加入.A或是.65 -->
+			<!-- Reference: http://keycode.info/ -->
+				<!-- <input id="enterMe" @keyup.enter.A="clickEnter" v-model="message"/> -->
+				<!-- <input id="enterMe" @keyup.enter.65="clickEnter" v-model="message"/> -->
+			<input id="enterMe" @keyup.enter="clickEnter" v-model="message"/>
+		</div>
+
+
 	</div>
 	<script>
 		let timeMethod = {
@@ -143,6 +154,21 @@
 			methods: ex2Method,
 		})
 
+		let ex3Data = {
+			message: '',
+		}
+
+		let ex3Method = {
+			clickEnter: () => {
+				console.log(ex3Data.message)
+			}
+		}
+
+		let ex3Vue = new Vue ({
+			el: '#ex3Vue',
+			data: ex3Data,
+			methods: ex3Method,
+		})
 	</script>
 </body>
 </html>
