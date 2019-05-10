@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Vue's component and 'Props' pratice</title>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.0/vue.min.js"></script>
+	<meta charset="utf-8">
+</head>
+<body>
+	<label><h3>1. Create a self-defined HTML-tag, and implement in Vue.component.</h3></label>
+	<div id="ex1">
+		<!-- HTML tag's variable is ruled in kebab-case(短橫線命名法) -->
+		<input-name></input-name>
+	</div>
+
+	<br>
+	<label><h3>2.The following three button is implemented by same Vue.component, but each of them have own individual data.</h3></label>
+	<div id="ex2_demoCounter">
+		<!-- We can define same component, but data is individual.-->
+		<button-counter></button-counter>
+		<button-counter></button-counter>
+		<button-counter></button-counter>
+	</div>
+
+	<br>
+	<label><h3>3.Define a global variable, and use it to implement the self-defined HTML tag.</h3></label>
+	<div id="ex3">
+		<input-name></input-name>
+	</div>
+
+
+	<script>
+		// Vue: input-name or inputName(lower camel case 駝峰命名法) is ok.
+		/**
+		 * Vue.component is same as other Vue object(have data, method, computed, watch property), but it don't create DOM instance(NOT Have 'el')
+		 * 
+		 * Vue.component's data needs return a object, so every instance is created by this can have individual data.
+		 * 
+		 */
+		//ex1 code.
+		Vue.component('inputName',{
+			data:()=>{
+				return {
+					inputType: '姓名',
+					place: 'Name',
+				}
+			},
+			// `:this sign is located at keyboard's upper left.
+			template:`<div>
+						<span>請輸入{{inputType}}</span>
+						<input :placeholder="place" />
+					  </div>`
+		})
+
+		let ex1 = new Vue({
+			el: '#ex1',
+		})
+
+		//ex2 code.
+		Vue.component('buttonCounter', {
+			data:()=>{
+				return {
+					count: 0,
+				}
+			},
+			template:`<div>
+						<button @click="count++">請點我</button>
+						<span>目前點了{{count}}下</span>
+					  </div>`
+		})
+
+		let ex2_demoCounter = new Vue({
+			el: '#ex2_demoCounter',
+		})
+
+
+		//ex3 code.
+		let componentsInputName = {
+			data:()=> {
+				return {
+					inputType: '姓名',
+					place: 'name',
+				}
+			},
+
+			template: `<div>
+						 <span>請輸入{{inputType}}</span>
+						 <input :placeholder="place" />
+					   </div>`
+		}
+
+		let ex3 = new Vue({
+			el: '#ex3',
+			components: {
+				//'inputName' is ok. 'input-name' is wrong. 
+				inputName: componentsInputName,
+			}
+		})
+
+	</script>
+
+</body>
+</html>
