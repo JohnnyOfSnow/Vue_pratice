@@ -27,6 +27,22 @@
 		<input-name></input-name>
 	</div>
 
+	<br>
+	<label><h3>4.Define parent and child component.</h3></label>
+	<div id="ex4">
+		<red-div></red-div>
+	</div>
+
+	<br>
+	<label><h3>5.Props: let you create many same component structure, and each of them have individual data.</h3></label>
+	<div id="ex5">
+		<!-- 
+			<input-data title="姓名" place="Name"></input-data>
+			<input-data title="暱稱" place="Nickname"></input-data>
+		-->
+		<input-data v-for="type in types" :data="type"></input-data>
+	</div>
+
 
 	<script>
 		// Vue: input-name or inputName(lower camel case 駝峰命名法) is ok.
@@ -37,7 +53,7 @@
 		 * 
 		 */
 		//ex1 code.
-		Vue.component('inputName',{
+		Vue.component('input-name',{
 			data:()=>{
 				return {
 					inputType: '姓名',
@@ -94,6 +110,64 @@
 				//'inputName' is ok. 'input-name' is wrong. 
 				inputName: componentsInputName,
 			}
+		})
+
+		//ex4 code
+		let componentsBlueDiv = {
+			data:()=> {
+				return {
+					blueStyle:{
+						height: '50px',
+						width: '100px',
+						backgroundColor: 'blue',
+					}
+				}
+			},
+			template: `<div :style="blueStyle"></div>`
+		}
+
+		let componentsRedDiv = {
+			components: {
+				blueDiv: componentsBlueDiv,
+			},
+			data:()=> {
+				return {
+					redStyle: {
+						height: '100px',
+						width: '200px',
+						backgroundColor: 'red',
+					},
+				}
+			},
+
+			template: `<div :style="redStyle"><blue-div></blue-div></div>"`
+		}
+
+		let ex4 = new Vue ({
+			el: '#ex4',
+			components: {
+				redDiv: componentsRedDiv,
+			},
+		})
+
+		//ex5 code
+		Vue.component('input-data', {
+			//props:['title', 'place'],
+			props:['data'],// title and place's data defined in following ex5's data types.
+			template: `<div>
+							<span>請輸入{{data.title}}:</span>
+					    	<input :placeholder="data.place"/>
+					   </div>`
+		})
+
+		let ex5 = new Vue ({
+			el: '#ex5',
+			data: {
+				types: [//Use v-for to create same component but different data.
+					{title: '姓名', place: 'Name'},
+					{title: '暱稱', place: 'Nickname'},
+				]
+			},
 		})
 
 	</script>
