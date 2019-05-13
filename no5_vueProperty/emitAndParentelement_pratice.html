@@ -40,9 +40,9 @@
 	</ul>
 
 	<label><h3>2.If $emit need parameter</h3></label>
-	<div id="demoCounter_emit">
+	<div id="demoCounter_emits">
 		<!-- Use v-on to bind a method defined in $emit, and pass a event name for parent component(demoCounter_emit) use.-->
-		<button-counter_emits v-on:add-count="emitCounterMethod(argument)"> </button-counter_emits>
+		<button-counter_emits v-on:add-count="emitCounterMethods(arguments)"> </button-counter_emits>
 		<!-- <button-counter_emit @add-count="emitCounterMethod"> </button-counter_emit> --> 
 		<span>目前按了{{count}}下</span>
 	</div>
@@ -82,8 +82,10 @@
 		let counterMethod = {
 			//emitCounterMethod is defined in parent component, and already bind child component by $emit.
 			emitCounterMethod: ()=> {
-				counterData.count++
-			}
+				counterData.count+=1
+			},
+
+			
 		}
 
 		let demoCounter_emit = new Vue ({
@@ -94,9 +96,29 @@
 
 		Vue.component('button-counter_emits', {
 			template: `<div>
-							<span>目前按了{{count}}下</sapn>
+							<button @click="$emit('add-count', '傳入的第一個參數', '傳入的第二個參數')">點我</button>
+							
 					   </div>`
 		})
+
+		let counterMethods = {
+			emitCounterMethods: (arrArg)=> {
+				console.log(arrArg)
+				console.log(arrArg[0])
+				console.log(arrArg[1])
+				counterData.count+=1
+			}
+		}
+
+		let demoCounter_emits = new Vue ({
+			el: '#demoCounter_emits',
+			data: counterData,
+			methods: counterMethods,
+		})
+
+
+		
+
 	</script>
 
 
