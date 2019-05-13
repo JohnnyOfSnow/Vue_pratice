@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Commuicate with parent element by $emit and v-model binding</title>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.0/vue.min.js"></script>
+	<meta charset="utf-8">
+
+	<style>
+		#sub li {
+			list-style-type: none;
+		}
+
+		.emphsize {
+			color: red;
+			font-weight: bold;
+		}
+	</style>
+</head>
+<body>
+	<label><h3></h3></label>
+	<div id="demoCounter">
+		<button-counter> </button-counter>
+		
+	</div>
+
+	<br>
+	<label><h3>1.Use 'emit' let parent component can listen event name, and access data by itself.</h3></label>
+	<div id="demoCounter_emit">
+		<!-- Use v-on to bind a method defined in $emit, and pass a event name for parent component(demoCounter_emit) use.-->
+		<button-counter_emit v-on:add-count="emitCounterMethod"> </button-counter_emit>
+		<!-- <button-counter_emit @add-count="emitCounterMethod"> </button-counter_emit> --> 
+		<span>目前按了{{count}}下</span>
+	</div>
+	<label><h3>如何讓外部組件(Parent component)能夠監聽內部組件(Child component)?</h3></label>
+	<ul id="sub">
+		<li>1.內部組件<label class="emphsize">定義$emit方法</label>(e.g., add-count)</li>
+		<li>2.在定義內部組件時，加入<label class="emphsize">v-on:$emit</label>方法(e.g., v-on:add-count)</li>
+		<li>3.在2的方法之後<label class="emphsize">給予外部組件監聽內部組件的方法</label>(e.g., v-on:add-count="emitCounterMethod")</li>
+		<li>4.於javascript定義外部組件方法，並且實作在3給予外部組件監聽的方法</li>
+	</ul>
+
+	<label><h3>2.If $emit need parameter</h3></label>
+	<div id="demoCounter_emit">
+		<!-- Use v-on to bind a method defined in $emit, and pass a event name for parent component(demoCounter_emit) use.-->
+		<button-counter_emits v-on:add-count="emitCounterMethod(argument)"> </button-counter_emits>
+		<!-- <button-counter_emit @add-count="emitCounterMethod"> </button-counter_emit> --> 
+		<span>目前按了{{count}}下</span>
+	</div>
+
+
+	<script>
+		Vue.component('button-counter', {
+			data: ()=> {
+				return {
+					count: 0
+				}
+			},
+
+			template: `<div>
+							<button @click="count++">點我</button>
+							<br>
+							<span>目前按了{{count}}下</span>
+					   </div>`
+		})
+
+		let demoCounter = new Vue ({
+			el: '#demoCounter',
+		})
+
+		Vue.component('button-counter_emit',{
+			// $emit will pass method name in lower case, so lower camel case (駝峰命名法) can't use.
+			template: `<div>
+							<!-- set a event name in $emit, and commuicate with parent component. -->
+							<button @click="$emit('add-count')">點我</button>
+					   </div>`
+		})
+
+		let counterData = {
+			count: 0,
+		}
+
+		let counterMethod = {
+			//emitCounterMethod is defined in parent component, and already bind child component by $emit.
+			emitCounterMethod: ()=> {
+				counterData.count++
+			}
+		}
+
+		let demoCounter_emit = new Vue ({
+			el: '#demoCounter_emit',
+			data: counterData,
+			methods: counterMethod,
+		})
+
+		Vue.component('button-counter_emits', {
+			template: `<div>
+							<span>目前按了{{count}}下</sapn>
+					   </div>`
+		})
+	</script>
+
+
+</body>
+</html>
