@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>How to use v-model in component</title>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.4.0/vue.min.js"></script>
+	<meta charset="utf-8">
+</head>
+<body>
+	<div id="demoInput">
+		<!-- <input-name :value="nameVal" @input="nameVal=$event.target.value"></input-name> -->
+		<input-name v-model="nameVal"></input-name>
+		<span>我的名字是{{nameVal}}</span>
+	</div>
+
+
+	<script>
+		Vue.component('input-name', {
+			props: ['message'],//Use props to bind input's value.
+			/**Because we want to let parent component can listen event, so we should add $emit in child component.
+			 *
+			 * Child component use v-model to define a input textbox, so it has $event.target.value (originally v-model bind input event)to set the use's input.
+			 *
+			 * So, child component's $emit need to pass two parameter, input(event name) and $event.target.value(user input value)
+			 *
+			 *
+			 */
+			template: `<div>
+							<input :value="message" @input="$emit('input', $event.target.value)">
+					   </div>`,
+		})
+
+		let demoInput = new Vue ({
+			el: '#demoInput',
+			data: {
+				nameVal: '',
+			},
+		})
+	</script>
+</body>
+</html>
