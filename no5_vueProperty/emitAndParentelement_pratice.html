@@ -102,10 +102,11 @@
 		})
 
 		let counterMethods = {
+			//$Emit will pass parameter in object form(array).
 			emitCounterMethods: (arrArg)=> {
 				console.log(arrArg)
-				console.log(arrArg[0])
-				console.log(arrArg[1])
+				console.log(arrArg[0])//First parameter
+				console.log(arrArg[1])//Second parameter
 				counterData.count+=1
 			}
 		}
